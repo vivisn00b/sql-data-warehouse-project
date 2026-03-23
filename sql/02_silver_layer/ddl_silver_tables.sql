@@ -26,8 +26,8 @@ CREATE TABLE silver.crm_cust_info (
 
     -- Metadata
     dwh_load_datetime     DATETIME2      DEFAULT SYSDATETIME(),
-    dwh_source_system     NVARCHAR(50)   NULL,
-    dwh_batch_id          INT,
+    dwh_source_system     NVARCHAR(50)   NOT NULL,
+    dwh_batch_id          BIGINT,
 );
 GO
 
@@ -51,8 +51,8 @@ CREATE TABLE silver.crm_prd_info (
 
     -- Metadata
     dwh_load_datetime     DATETIME2      DEFAULT SYSDATETIME(),
-    dwh_source_system     NVARCHAR(50)   NULL,
-    dwh_batch_id          INT,
+    dwh_source_system     NVARCHAR(50)   NOT NULL,
+    dwh_batch_id          BIGINT,
 );
 GO
 
@@ -77,8 +77,8 @@ CREATE TABLE silver.crm_sales_details (
 
     -- Metadata
     dwh_load_datetime     DATETIME2      DEFAULT SYSDATETIME(),
-    dwh_source_system     NVARCHAR(50)   NULL,
-    dwh_batch_id          INT,
+    dwh_source_system     NVARCHAR(50)   NOT NULL,
+    dwh_batch_id          BIGINT,
 );
 GO
 
@@ -96,8 +96,8 @@ CREATE TABLE silver.erp_loc_a101 (
 
     -- Metadata
     dwh_load_datetime     DATETIME2      DEFAULT SYSDATETIME(),
-    dwh_source_system     NVARCHAR(50)   NULL,
-    dwh_batch_id          INT,
+    dwh_source_system     NVARCHAR(50)   NOT NULL,
+    dwh_batch_id          BIGINT,
 );
 GO
 
@@ -116,8 +116,8 @@ CREATE TABLE silver.erp_cust_az12 (
 
     -- Metadata
     dwh_load_datetime     DATETIME2      DEFAULT SYSDATETIME(),
-    dwh_source_system     NVARCHAR(50)   NULL,
-    dwh_batch_id          INT,
+    dwh_source_system     NVARCHAR(50)   NOT NULL,
+    dwh_batch_id          BIGINT,
 );
 GO
 
@@ -137,7 +137,7 @@ CREATE TABLE silver.erp_px_cat_g1v2 (
 
     -- Metadata
     dwh_load_datetime     DATETIME2      DEFAULT SYSDATETIME(),
-    dwh_source_system     NVARCHAR(50)   NULL,
-    dwh_batch_id          INT,
+    dwh_source_system     NVARCHAR(50)   NOT NULL,
+    dwh_batch_id          BIGINT,
 );
 GO
