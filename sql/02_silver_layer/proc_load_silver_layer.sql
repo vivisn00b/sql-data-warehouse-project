@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===============================================================================
 Stored Procedure: Load Silver Layer (Bronze -> Silver)
 ===============================================================================
@@ -12,10 +12,11 @@ Tables Loaded:
     - ERP: erp_cust_az12, erp_loc_a101, erp_px_cat_g1v2
 
 Parameters:
-    - None
+    - @batch_id BIGINT : The unique batch ID assigned by the parent ETL process.
 
 Usage:
-    EXEC silver.load_silver;
+    DECLARE @batch_id BIGINT = 20260301123000;
+    EXEC silver.load_silver @batch_id;
 
 -------------------------------------------------------------------------------
 Learning Notes:
@@ -68,6 +69,7 @@ Learning Notes:
 */
 
 CREATE OR ALTER PROCEDURE silver.load_silver
+	@batch_id BIGINT
 AS
 BEGIN
 
@@ -137,7 +139,7 @@ BEGIN
             END,
             cst_create_date,
 			'CRM',
-			0000001
+			@batch_id
         FROM (
             SELECT *,
                    ROW_NUMBER() OVER (
@@ -191,7 +193,7 @@ BEGIN
 				AS DATE
 			) AS prd_end_dt, -- Calculate end date as one day before the next start date
 			'CRM',
-			0000001
+			@batch_id
 		FROM bronze.crm_prd_info;
         
 		SET @end_time = GETDATE();
@@ -249,7 +251,7 @@ BEGIN
 				ELSE sls_price
 			END AS sls_price, -- Derive price if original value is invaild
 			'CRM',
-			0000001
+			@batch_id
 		FROM bronze.crm_sales_details;
         
 		SET @end_time = GETDATE();
@@ -285,7 +287,7 @@ BEGIN
 				ELSE 'n/a'
 			END AS gen, -- Normalize gender values and handle unknown cases
 			'ERP',
-			0000001
+			@batch_id
 		FROM bronze.erp_cust_az12;
 	    
 		SET @end_time = GETDATE();
@@ -318,7 +320,7 @@ BEGIN
 				ELSE TRIM(cntry)
 			END AS cntry, -- Normalize and Handle missing or blank country codes
 			'ERP',
-			0000001
+			@batch_id
 		FROM bronze.erp_loc_a101;
 	    
 		SET @end_time = GETDATE();
@@ -346,7 +348,7 @@ BEGIN
 			subcat,
 			maintenance,
 			'ERP',
-			0000001
+			@batch_id
 		FROM bronze.erp_px_cat_g1v2;
 		
 		SET @end_time = GETDATE();
@@ -384,6 +386,7 @@ BEGIN
         PRINT 'Error State  : ' + CAST(ERROR_STATE() AS NVARCHAR);
         PRINT '==========================================';
 
+		THROW;
     END CATCH
 
 END
